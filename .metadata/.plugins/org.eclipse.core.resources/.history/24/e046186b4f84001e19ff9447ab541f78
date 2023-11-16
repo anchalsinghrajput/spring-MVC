@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - My To-Do List App</title>
+</head>
+<body>
+    <header>
+        <h1>Login to My To-Do List App</h1>
+    </header>
+    
+    <main>
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            
+            <button type="submit">Login</button><br>
+        </form>
+        
+        <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+    </main>
+    
+    <footer>
+        <p>&copy; Anchal Singh To-Do List App</p>
+    </footer>
+</body>
+</html>

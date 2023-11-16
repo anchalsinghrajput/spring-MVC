@@ -1,0 +1,130 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.infosys.anchal.todoList.entity.Task" %>
+<%@ page import="java.util.ArrayList" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #6a1b9a;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        form label {
+            flex: 1;
+            text-align: right;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        form input[type="text"],
+        form select {
+            flex: 2;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form button {
+            flex: 1;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #6a1b9a;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+        form button:hover {
+            background-color: #9c27b0;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #6a1b9a;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .button:last-child {
+            margin-right: 0;
+        }
+        .button:hover {
+            background-color: #9c27b0;
+        }
+        .no-tasks {
+            font-style: italic;
+            color: #888;
+        }
+        .action-links {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    
+    <form action="/tasks/search" method="get">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title">
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" placeholder="Enter description">
+        
+        <label for="completed">Completed:</label>
+        <select id="completed" name="completed">
+            <option value="">-- Select --</option>
+            <option value="true">Completed</option>
+            <option value="false">Not Completed</option>
+        </select>
+        
+        <button type="submit">Search</button>
+    </form>
+
+    <table>
+        <!-- ... Your table content ... -->
+    </table>
+
+    <a href="/tasks/create" class="button">Create New Task</a>
+    <a href="/logout" class="button">Logout</a>
+</body>
+</html>

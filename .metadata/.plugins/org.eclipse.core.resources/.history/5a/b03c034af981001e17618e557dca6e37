@@ -1,0 +1,83 @@
+package com.infosys.anchal.todoList.controller;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.infosys.anchal.todoList.entity.Task;
+import com.infosys.anchal.todoList.entity.User;
+import com.infosys.anchal.todoList.repo.TaskRepo;
+
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@Controller
+@RequestMapping("/tasks")
+public class TaskController {
+
+    private final TaskRepo taskRepository;
+
+    @Autowired
+    public TaskController(TaskRepo taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
+    private boolean isUserLoggedIn(HttpSession session) {
+        return session.getAttribute("user") != null;
+    }
+
+    @GetMapping
+    public String listTasks(Model model, HttpSession session) {
+        if (!isUserLoggedIn(session)) {
+            return "redirect:/login";
+        }
+
+        User user = (User) session.getAttribute("user");
+        List<Task> userTasks = taskRepository.findByUserId(user.getId());
+        model.addAttribute("tasks", userTasks);
+
+        return "taskList";
+    }
+
+    @GetMapping("/create")
+    public String showTaskForm(Model model) {
+        model.addAttribute("task", new Task());
+        return "taskForm";
+    }
+
+    @PostMapping("/create")
+    public String createTask(@ModelAttribute Task task, HttpSession session, Model model) {
+        if (!isUserLoggedIn(session)) {
+            return "redirect:/login";
+        }
+
+        User user = (User) session.getAttribute("user");
+        task.setUser(user);
+        taskRepository.save(task);
+
+        List<Task> userTasks = taskRepository.findByUser(user);
+        model.addAttribute("userTasks", userTasks);
+
+        return "taskList";
+    }
+    
+    @GetMapping("/delete/{taskId}")
+    public String deleteTask(@PathVariable int taskId, HttpSession session) {
+        if (!isUserLoggedIn(session)) {
+            return "redirect:/login";
+        }
+        Task task = taskRepository.findById(taskId).orElse(null);
+        if (task != null) {
+            taskRepository.delete(task);
+        }
+        return "redirect:/tasks"; 
+    }
+}

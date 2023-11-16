@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;todoList/src/main/webapp/views/editForm.jsp&apos; to &apos;editTask.jsp&apos;" description="Rename resource &apos;editForm.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/views/editForm.jsp" name="editTask.jsp" stamp="1700115750234" updateReferences="true"/>
+</session>

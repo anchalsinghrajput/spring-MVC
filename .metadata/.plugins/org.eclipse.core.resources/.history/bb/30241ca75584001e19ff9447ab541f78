@@ -1,0 +1,15 @@
+package com.infosys.anchal.todoList.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.infosys.anchal.todoList.entity.Task;
+import com.infosys.anchal.todoList.entity.User;
+
+public interface TaskRepo extends JpaRepository<Task, Integer> {	
+    List<Task> findByUser(User user);
+    List<Task> findByUserId(int userId);
+    List<Task> findByUserAndCompleted(User user, Boolean completed);
+	List<Task> findByUserAndCriteria(User user, String title, String description, Boolean completed);
+}

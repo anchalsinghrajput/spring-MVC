@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #6a1b9a;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        form input[type="text"],
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form button {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #6a1b9a;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #9c27b0;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #6a1b9a;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .button:last-child {
+            margin-right: 0;
+        }
+        .button:hover {
+            background-color: #9c27b0;
+        }
+        .no-tasks {
+            font-style: italic;
+            color: #888;
+        }
+        .action-links {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    
+    <form action="/tasks/search" method="get">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title"><br>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" placeholder="Enter description"><br>
+
+        <label for="completed">Completed:</label>
+        <select id="completed" name="completed">
+            <option value="">-- Select --</option>
+            <option value="true">Completed</option>
+            <option value="false">Not Completed</option>
+        </select><br>
+
+        <button type="submit">Search</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Actions</th>
+        </tr>
+        
+        <% List<Task> userTasks = (List<Task>) request.getAttribute("userTasks");
+        if (userTasks != null && !userTasks.isEmpty()) {
+            for (Task task : userTasks) { %>
+                <tr>
+                    <td><%= task.getTitle() %></td>
+                    <td><%= task.getDescription() %></td>
+                    <td>
+                        <input type="checkbox" <%= task.isCompleted() ? "checked" : "" %>/>
+                    </td>
+                    <td class="action-links">
+                        <a href="/tasks/edit/<%= task.getId() %>" class="button">Edit</a>
+                        <a href="/tasks/delete/<%= task.getId() %>" class="button">Delete</a>
+                    </td>
+                </tr>
+        <% } } else { %>
+                <tr><td colspan='4' class='no-tasks'>No tasks found</td></tr>
+        <% } %>
+    </table>
+
+    <a href="/tasks/create" class="button">Create New Task</a>
+    <a href="/logout" class="button">Logout</a>
+</body>
+</html>

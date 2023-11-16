@@ -1,0 +1,42 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.List" %>
+<%@ page import="your.package.Task" %>
+<%@ page import="java.util.ArrayList" %>
+<html>
+<head>
+    <title>Task List</title>
+</head>
+<body>
+    <h1>Task List</h1>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Actions</th>
+        </tr>
+        
+        <% 
+            List<Task> userTasks = (List<Task>) request.getAttribute("userTasks");
+            for (Task task : userTasks) {
+        %>
+            <tr>
+                <td><%= task.getTitle() %></td>
+                <td><%= task.getDescription() %></td>
+                <td>
+                    <input type="checkbox" <%= task.isCompleted() ? "checked" : "" %> disabled="disabled" />
+                </td>
+                <td>
+                    <a href="/tasks/edit/<%= task.getId() %>">Edit</a> |
+                    <a href="/tasks/delete/<%= task.getId() %>">Delete</a>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+
+    <a href="/tasks/create">Create New Task</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>
